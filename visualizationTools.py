@@ -12,18 +12,18 @@ import pandas as pd
 import numpy as np
 from matplotlib.animation import FuncAnimation, PillowWriter
     
-def makeTrajMovie2D(traj, sideLen, filename = 'LJtraj.gif'):
+def makeTrajMovie2D(traj, sideLen, fps=30, markersize=1, filename = 'LJtraj.gif'):
     fig = plt.figure(figsize=(5,5))
     plt.xlim(0 - .5, sideLen+.5)
     plt.ylim(0 - .5, sideLen+.5)
-    graph, = plt.plot([], [], 'o')
+    graph, = plt.plot([], [], 'o', markersize=markersize)
     def animate(i):
         x = traj[i][:,0]
         y = traj[i][:,1]
         graph.set_data(x, y)
         return(graph,)
     ani = FuncAnimation(fig, animate, frames=len(traj), blit=True)
-    writergif = PillowWriter(fps=30) 
+    writergif = PillowWriter(fps=fps) 
     ani.save(filename, writer=writergif)
     
 def plotKEtotals(filepath):
